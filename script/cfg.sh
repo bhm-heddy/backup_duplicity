@@ -2,7 +2,7 @@
 
 
 ## REPO PATH
-REPO_PATH=
+REPO_PATH=~/backup_duplicity
 
 ## REPO WITH FILES AND COPY-LINKS
 SRC_PATH=$REPO_PATH/backup
