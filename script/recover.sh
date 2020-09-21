@@ -73,5 +73,19 @@ then
 		$SCW_BUCKET $DST
 fi
 
+
+unset ENC_KEY
+unset SIG_KEY
+unset PASSPHRASE
+unset SIGN_PASSPHRASE
+unset AWS_ACCESS_KEY_ID
+unset AWS_SECRET_ACCESS_KEY
+unset SCW_BUCKET
+unset REPO_PATH
+unset SRC_PATH
+unset LOG_PATH
+unset REMOVE_BACKUP_TIME
+unset FULL_BACKUP_TIME
+
 exit
 
