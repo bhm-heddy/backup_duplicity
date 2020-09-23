@@ -55,7 +55,7 @@ Renseigner les variables présentes dans le script avec respectivement :
 # MISE EN PLACE
 
 Mettre les répertoires et fichier à backup dans le répertoire *backup*. 
-Pour éviter de devoir copier des répertoires entiers des liens symboliques peuvent mis en place :
+Pour éviter de devoir copier des répertoires entiers des liens symboliques peuvent être mis en place :
 
 exemple : `ln -s /var/snap/nextcloud/common/nextcloud/data ~/duplicity/backup/nextcloud_data`
 
