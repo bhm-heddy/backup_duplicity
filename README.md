@@ -19,10 +19,10 @@ gpg --full-generate-key
 
 # CONFIGURATION
 
-
 ## CFG.SH
 
 Vérifier que la valeur de "BACKUP_PATH" conresponde bien à l'emplacement du répertoir contenant les répertoir "backup", "log", "script" et à l'utilisateur initiant les scripts.
+
 
 La variable "FULL_BACKUP_TIME" indique à duplicity d'effectuer un backup complet tous les X temps.
 
