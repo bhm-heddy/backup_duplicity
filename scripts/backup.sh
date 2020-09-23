@@ -12,11 +12,6 @@ DAY=`date +%d`
 HOUR=`date +%H:%M:%S`
 
 
-## Maintence mode. Locks the sessions of logged-in users and prevents new logins in order to prevent inconsistencies of your data
-
-sudo nextcloud.occ maintenance:mode --on
-
-
 
 ## First call duplicity, delete all backup sets older than the REMOVE_BACK_TIME
 
@@ -49,12 +44,6 @@ duplicity \
 	$SRC_PATH $SCW_BUCKET \
 	>>$LOG_PATH/backup_$DATE.log \
 	2>&1
-
-
-
-## Disable maintenance mode
-
-sudo nextcloud.occ maintenance:mode --off
 
 
 
