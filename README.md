@@ -2,17 +2,17 @@
 
 # INSTALLATION
 
-#### Installer duplicity
-sudo apt-get update && sudo apt-get install duplicity -y
+#### Installer duplicit`
+`sudo apt-get update && sudo apt-get install duplicity -y`
 
 #### Installer les dépendances necessaire pour le protocol s3
-sudo apt-get install -y python3-boto
+`sudo apt-get install -y python3-boto`
 
 #### Créer la clé de chiffrement
-gpg --full-generate-key
+`gpg --full-generate-key`
 
 #### Créer la clé de signature
-gpg --full-generate-key
+`gpg --full-generate-key`
 
 #### Faire un backup des clés.
 
@@ -21,8 +21,7 @@ gpg --full-generate-key
 
 ## CFG.SH
 
-Vérifier que la valeur de "BACKUP_PATH" conresponde bien à l'emplacement du répertoir contenant les répertoir "backup", "log", "script" et à l'utilisateur initiant les scripts.
-
+Vérifier que la valeur de "BACKUP_PATH" conresponde au path du répertoir contenant "backup", "log", "scripts" 
 
 La variable "FULL_BACKUP_TIME" indique à duplicity d'effectuer un backup complet tous les X temps.
 
