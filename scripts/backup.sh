@@ -1,5 +1,8 @@
 #!/bin/bash
 
+
+
+
 source auth.sh
 source cfg.sh
 
@@ -7,6 +10,10 @@ source cfg.sh
 DATE=`date +%Y-%m`
 DAY=`date +%d`
 HOUR=`date +%H:%M:%S`
+
+
+
+## First call duplicity, delete all backup sets older than the REMOVE_BACK_TIME
 
 echo -e "\t\t[BACKUP]\t$DATE-$DAY\t$HOUR\n" >>$LOG_PATH/backup_$DATE.log
 echo -e "\t--- Removing old backups\n" >>$LOG_PATH/backup_$DATE.log
@@ -21,6 +28,9 @@ duplicity \
 	2>&1
 
 
+
+## Second call, encrypt incremental backup
+
 echo -e "\t--- Creating and uploading backup\n" >>$LOG_PATH/backup_$DATE.log
 
 duplicity \
@@ -34,6 +44,9 @@ duplicity \
 	$SRC_PATH $SCW_BUCKET \
 	>>$LOG_PATH/backup_$DATE.log \
 	2>&1
+
+
+
 
 unset ENC_KEY
 unset SIG_KEY
