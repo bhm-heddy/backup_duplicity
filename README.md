@@ -23,12 +23,12 @@
 
 ## CFG.SH
 
-Vérifier que la valeur de ***BACKUP_PATH*** conresponde bien à l'emplacement du répertoir contenant les répertoir "backup", "log", "script" et à l'utilisateur initiant les scripts.
+Vérifier que la valeur de **BACKUP_PATH** conresponde bien à l'emplacement du répertoir contenant les répertoir "backup", "log", "script" et à l'utilisateur initiant les scripts.
 
 
-La variable ***FULL_BACKUP_TIME*** indique à duplicity d'effectuer un backup complet tous les X temps.
+La variable **FULL_BACKUP_TIME** indique à duplicity d'effectuer un backup complet tous les X temps.
 
-La variable ***REMOVE_BACK_TIME*** indique à duplicity d'effacer les backup après X temps. 
+La variable **REMOVE_BACK_TIME** indique à duplicity d'effacer les backup après X temps. 
 
 Par defaut, ces variables sont configurées pour effectuer un backup complet tous les mois et effacer les backup après 6 mois. 
 
