@@ -3,16 +3,16 @@
 # INSTALLATION
 
 #### Installer duplicity
-sudo apt-get update && sudo apt-get install duplicity -y
+  `sudo apt-get update && sudo apt-get install duplicity -y`
 
 #### Installer les dépendances necessaire pour le protocol s3
-sudo apt-get install -y python3-boto
+  `sudo apt-get install -y python3-boto`
 
 #### Créer la clé de chiffrement
-gpg --full-generate-key
+  `gpg --full-generate-key`
 
 #### Créer la clé de signature
-gpg --full-generate-key
+  `gpg --full-generate-key`
 
 #### Faire un backup des clés.
 
