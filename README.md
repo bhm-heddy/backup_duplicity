@@ -61,9 +61,3 @@ exemple : `ln -s /var/snap/nextcloud/common/nextcloud/data ~/duplicity/backup/ne
 
 
 
-
-
-## PARTIE SCRIPT
-
-
-##### Renseigner les champs du script auth.sh && cfg.sh
