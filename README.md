@@ -17,16 +17,18 @@
 #### Faire un backup des clés.
 
 
+
+
 # CONFIGURATION
 
 ## CFG.SH
 
-Vérifier que la valeur de "BACKUP_PATH" conresponde bien à l'emplacement du répertoir contenant les répertoir "backup", "log", "script" et à l'utilisateur initiant les scripts.
+Vérifier que la valeur de ***BACKUP_PATH*** conresponde bien à l'emplacement du répertoir contenant les répertoir "backup", "log", "script" et à l'utilisateur initiant les scripts.
 
 
-La variable "FULL_BACKUP_TIME" indique à duplicity d'effectuer un backup complet tous les X temps.
+La variable ***FULL_BACKUP_TIME*** indique à duplicity d'effectuer un backup complet tous les X temps.
 
-La variable "REMOVE_BACK_TIME" indique à duplicity d'effacer les backup après X temps. 
+La variable ***REMOVE_BACK_TIME*** indique à duplicity d'effacer les backup après X temps. 
 
 Par defaut, ces variables sont configurées pour effectuer un backup complet tous les mois et effacer les backup après 6 mois. 
 
@@ -39,7 +41,7 @@ Un mois est toujours égal a 35jours et une année à 365 jours.
 
 ## AUTH.SH
 
-Renseigner les variables présentes dans le script avec :
+Renseigner les variables présentes dans le script avec respectivement :
 - Le fingerprint de la clé de chiffrement
 - Le fingerprint de la clé de signature
 - Le mot de passe de la clé de chiffrement
@@ -56,7 +58,7 @@ Renseigner les variables présentes dans le script avec :
 Mettre les répertoires et fichier à backup dans le répertoire "backup". 
 Pour éviter de devoir copier des répertoires entiers des liens symboliques peuvent mis en place :
 
-exemple : ln -s /var/snap/nextcloud/common/nextcloud/data ~/duplicity/backup/nextcloud_data
+exemple : `ln -s /var/snap/nextcloud/common/nextcloud/data ~/duplicity/backup/nextcloud_data`
 
 
 
