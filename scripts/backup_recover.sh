@@ -1,8 +1,24 @@
 #!/bin/bash
 
 
-source auth.sh
-source cfg.sh
+for av in $@; do
+	if [ -r $av ]; then
+		source $av
+	else
+		>&2 echo "Bad file: $av"
+		exit 1
+	fi
+done
+
+
+if [ -z $ENC_KEY ] || [ -z $SIG_KEY ] \
+	|| [ -z $PASSPHRASE ] || [ -z $SIGN_PASSPHRASE ] \
+	|| [ -z $AWS_ACCESS_KEY_ID ] || [ -z $AWS_SECRET_ACCESS_KEY ] \
+	|| [ -z $SCW_BUCKET ]
+then
+	>&2 echo "message d erreur + info"
+	exit 1
+fi
 
 CONSIGNE="
 Afficher les détails des backup (1)
@@ -22,7 +38,7 @@ gleaning()
 	then
 		TIME=0
 	fi
-	echo -n "Indiquer le path absolu où stocker le backup : "
+	echo -n "Indiquer le chmin où stocker le backup (path/<NAME BACKUP>) : "
 	read DST
 	if [ $OPT -eq 4 ]
 	then
@@ -42,10 +58,10 @@ while [ $OPT -le 2 ]
 do
 	if [ $OPT -eq 1 ]
 	then
-		bash $BACKUP_PATH/scripts/collection_status.sh
+		bash backup_list_bucket.sh
 	elif [ $OPT -eq 2 ]
 	then
-		bash $BACKUP_PATH/scripts/list_files.sh
+		bash backup_list_files.sh
 	fi
 	echo -en "$CONSIGNE\n(1-4): "
 	read OPT
@@ -82,10 +98,6 @@ unset AWS_ACCESS_KEY_ID
 unset AWS_SECRET_ACCESS_KEY
 unset SCW_BUCKET
 unset REPO_PATH
-unset SRC_PATH
-unset LOG_PATH
-unset REMOVE_BACKUP_TIME
-unset FULL_BACKUP_TIME
 
 exit
 

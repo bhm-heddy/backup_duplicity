@@ -8,8 +8,24 @@
 #              hand if the archive has been deleted or corrupted, this command will not detect it. 
 
 
-source auth.sh
-source cfg.sh
+
+for av in $@; do
+	if [ -r $av ]; then
+		source $av
+	else
+		>&2 echo "Bad file: $av"
+		exit 1
+	fi
+done
+
+if [ -z $ENC_KEY ] || [ -z $SIG_KEY ] \
+	|| [ -z $PASSPHRASE ] || [ -z $SIGN_PASSPHRASE ] \
+	|| [ -z $AWS_ACCESS_KEY_ID ] || [ -z $AWS_SECRET_ACCESS_KEY ] \
+	|| [ -z $SCW_BUCKET ]
+then
+	>&2 echo "message d erreur + info"
+	exit 1
+fi
 
 CONSIGNE="Entrer :\n- Une date specifique\n- Vide ou 0 pour le backup le plus récent\n- 1 pour afficher les details des backup\n   ->: "
 
@@ -25,7 +41,7 @@ read TIME
 
 while [ "$TIME"  == "1" ]
 do
-	bash $BACKUP_PATH/scripts/collection_status.sh
+	bash backup_list_bucket.sh
 	echo -ne "\n\n$CONSIGNE"
 	read TIME
 done
@@ -52,7 +68,3 @@ unset AWS_ACCESS_KEY_ID
 unset AWS_SECRET_ACCESS_KEY
 unset SCW_BUCKET
 unset REPO_PATH
-unset SRC_PATH
-unset LOG_PATH
-unset REMOVE_BACKUP_TIME
-unset FULL_BACKUP_TIME

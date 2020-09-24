@@ -1,10 +1,32 @@
 #!/bin/bash
 
 
+for av in $@; do
+	if [ -r $av ]; then
+		source $av
+	else
+		>&2 echo "Bad file: $av"
+		exit 1
+	fi
+done
 
 
-source auth.sh
-source cfg.sh
+
+export SRC_PATH=${SRC_PATH:-/var/lib/backup}
+export LOG_PATH=${LOG_PATH:-/var/log}
+export REMOVE_BACKUP_TIME=${REMOVE_BACKUP_TIME:-6M}
+export FULL_BACKUP_TIME=${FULL_BACKUP_TIME:-1M}
+
+
+
+if [ -z $ENC_KEY ] || [ -z $SIG_KEY ] \
+	|| [ -z $PASSPHRASE ] || [ -z $SIGN_PASSPHRASE ] \
+	|| [ -z $AWS_ACCESS_KEY_ID ] || [ -z $AWS_SECRET_ACCESS_KEY ] \
+	|| [ -z $SCW_BUCKET ]
+then
+	>&2 echo "message d erreur + info"
+	exit 1
+fi
 
 
 DATE=`date +%Y-%m`
@@ -59,15 +81,15 @@ sudo nextcloud.occ maintenance:mode --off
 
 
 
-unset ENC_KEY
-unset SIG_KEY
-unset PASSPHRASE
-unset SIGN_PASSPHRASE
-unset AWS_ACCESS_KEY_ID
-unset AWS_SECRET_ACCESS_KEY
-unset SCW_BUCKET
-unset REPO_PATH
-unset SRC_PATH
-unset LOG_PATH
-unset REMOVE_BACKUP_TIME
-unset FULL_BACKUP_TIME
+unset enc_key
+unset sig_key
+unset passphrase
+unset sign_passphrase
+unset aws_access_key_id
+unset aws_secret_access_key
+unset scw_bucket
+unset repo_path
+unset src_path
+unset log_path
+unset remove_backup_time
+unset full_backup_time
