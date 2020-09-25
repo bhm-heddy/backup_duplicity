@@ -97,7 +97,6 @@ unset SIGN_PASSPHRASE
 unset AWS_ACCESS_KEY_ID
 unset AWS_SECRET_ACCESS_KEY
 unset SCW_BUCKET
-unset REPO_PATH
 
 exit
 
