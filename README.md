@@ -88,11 +88,11 @@ Renseigner les variables des fichiers de configuration et les déplacer dans */e
 `mv backup_auth.conf backup_cfg.conf /etc`
 
 #### Utilisation
-`backup /etc/backup_auth.conf /etc/backup_cfg.conf`
+`backup.sh /etc/backup_auth.conf /etc/backup_cfg.conf`
 
-`backup_list_bucket /etc/backup_auth.conf`
+`backup_list_bucket.sh /etc/backup_auth.conf`
 
-`backup_recover /etc/backup_auth.conf`
+`backup_recover.sh /etc/backup_auth.conf`
 
 #### Crontab
 Mise en place d'une tâche crontab effectuant une sauvegarde tous les jours à 03h00.
