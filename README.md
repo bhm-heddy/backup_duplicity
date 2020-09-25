@@ -35,10 +35,10 @@ Les scipts *scripts/backup.sh*, *scipts/backup_list_bucket.sh*, *scripts/backup_
 
 Varaibles d'envirronnement pour le chiffrement gpg
 
-*ENC_KEY : Le fingerprint de la clé de chiffrement
-*SIG_KEY : Le fingerprint de la clé de signature
-*PASSPHRASE : Le mot de passe de la clé de chiffrement
-*$SIGN_PASSPHRASE : Le mot de passe de la cle de signature
+* ENC_KEY : Le fingerprint de la clé de chiffrement
+* SIG_KEY : Le fingerprint de la clé de signature
+* PASSPHRASE : Le mot de passe de la clé de chiffrement
+* SIGN_PASSPHRASE : Le mot de passe de la cle de signature
 
 Variables d'environnement pour le bucket S3
 *AWS_ACCESS_KEY_ID : L'ID du bucket cloud storage
