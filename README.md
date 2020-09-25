@@ -88,7 +88,7 @@ Renseigner les variables des fichiers de configuration et les déplacer dans */e
 `mv backup_auth.conf backup_cfg.conf /etc`
 
 #### Utilisation
-`backup /etc/backup_auth_conf /etc/backup_cfg.conf`
+`backup /etc/backup_auth.conf /etc/backup_cfg.conf`
 
 `backup_list_bucket /etc/backup_auth.conf`
 
