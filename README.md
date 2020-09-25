@@ -53,9 +53,9 @@ Varaibles d'envirronnement pour le chiffrement gpg
 Variables d'environnement pour le bucket S3
 * AWS_ACCESS_KEY_ID : L'ID du bucket cloud storage
 * AWS_SECRET_ACCESS_KEY : Le mot de passe du bucket
-* $SCW_BUCKET : Le nom du bucket
+* SCW_BUCKET : Le nom du bucket
 
-Variables locales de configuration de la sauvegarde
+Variables locales de configuration de la sauvegarde.
 Si ces variables n'existe pas, elles prennent une valeur défaut
 * FULL_BACKUP_TIME : Effectue un sauvegarde complet tous les X temps. (défaut: *1M*)
 * REMOVE_BACK_TIME : Efface les sauvegardes les plus anciens après X temps. (défaut: *6M*)
@@ -75,13 +75,17 @@ Créer un répertoire pour stocker les fichiers à backup
 Pour ne pas à avoir à copier des fichiers et répertoires volumineux, l'utilisation de liens symboliques est supporté
 `ln -s /rèpertoire_à_sauvegardè ~/backup/ŕepertoire`
 
+Rendre les scripts exècutables 
+
+`chmod +x scripts/*.sh `
+
 Déplacer les scripts dans */usr/sbin*
 
-`cp scripts/*.sh /usr/sbin`
+`mv scripts/*.sh /usr/sbin`
 
 Renseigner les variables des fichiers de configuration et les déplacer dans */etc*
 
-`cp backup_auth.conf backup_cfg.conf /etc`
+`mv backup_auth.conf backup_cfg.conf /etc`
 
 #### Utilisation
 `backup /etc/backup_auth_conf /etc/backup_cfg.conf`
