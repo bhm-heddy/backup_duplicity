@@ -99,7 +99,7 @@ Mise en place d'une tâche crontab effectuant une sauvegarde tous les jours à 0
 
 `crontab -e`
 
-`00 03 * * *		backup.sh /etc/back_auth.conf /etc/backup_cfg.con`
+`00 03 * * *		backup.sh /etc/backup_auth.conf /etc/backup_cfg.con`
 
 
 
