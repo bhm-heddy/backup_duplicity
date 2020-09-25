@@ -41,42 +41,24 @@ Varaibles d'envirronnement pour le chiffrement gpg
 * SIGN_PASSPHRASE : Le mot de passe de la cle de signature
 
 Variables d'environnement pour le bucket S3
-*AWS_ACCESS_KEY_ID : L'ID du bucket cloud storage
-*AWS_SECRET_ACCESS_KEY : Le mot de passe du bucket
-*$SCW_BUCKET : Le nom du bucket
+* AWS_ACCESS_KEY_ID : L'ID du bucket cloud storage
+* AWS_SECRET_ACCESS_KEY : Le mot de passe du bucket
+* $SCW_BUCKET : Le nom du bucket
 
 Variables locales de configuration de la sauvegarde
 Si ces variables n'existe pas, elles prennent une valeur défaut
-*FULL_BACKUP_TIME : Effectue un sauvegarde complet tous les X temps. (défaut: *1M*)
-*REMOVE_BACK_TIME : Efface les sauvegardes les plus anciens après X temps. (défaut: *6M*)
-*SRC_PATH : Chemin du répertoir à sauvegarder. (defaut: *A COMPLETER*)
-*LOG_PATH : Chemin oú écrire les log.i (défaut: */var/log*)
+* FULL_BACKUP_TIME : Effectue un sauvegarde complet tous les X temps. (défaut: *1M*)
+* REMOVE_BACK_TIME : Efface les sauvegardes les plus anciens après X temps. (défaut: *6M*)
+* SRC_PATH : Chemin du répertoir à sauvegarder. (defaut: *A COMPLETER*)
+* LOG_PATH : Chemin oú écrire les log.i (défaut: */var/log*)
 
 
 
 **backup.sh** : Effectue la sauvegarde.
-* enc_key
-* sig_key
-* passphrase
-* sign_passphrase
-* aws_access_key_id
-* aws_secret_access_key
-* scw_bucket
-* src_path
-* log_path
-* remove_backup_time
-* full_backup_time
-
 **backup_list_bucket.sh** : Liste l'ensemble des sauvegardes sur le bucket.
 **backup_list_files.sh** : Liste les fichiers et répertoires dans une sauvegarde 
 **backup_recover.sh**: Récupère une sauvegarde complète ou un fichier ou répertoire précis.
-* enc_key
-* sig_key
-* passphrase
-* sign_passphrase
-* aws_access_key_id
-* aws_secret_access_key
-* scw_bucket
+
 
 
 
@@ -104,7 +86,9 @@ Renseigner les variables des fichiers de configuration et les déplacer dans */e
 
 #### Crontab
 Mise en place d'une tâche crontab effectuant une sauvegarde tous les jours à 03h00.
+
 `crontab -e`
+
 `00 03 * * *		backup /etc/back_auth.conf /etc/backup_cfg.con`
 
 
