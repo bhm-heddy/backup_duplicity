@@ -1,5 +1,15 @@
 # backup_duplicity
 
+
+**backup.sh** : Effectue la sauvegarde.
+
+**backup_list_bucket.sh** : Liste l'ensemble des sauvegardes sur le bucket.
+
+**backup_list_files.sh** : Liste les fichiers et répertoires dans une sauvegarde.
+
+**backup_recover.sh**: Récupère une sauvegarde complète ou un fichier ou répertoire précis.
+
+
 # INSTALLATION
 
 #### Installer duplicity
@@ -31,7 +41,7 @@ Ubuntu 20.04.1 LTS
 
 ## Fonctionnement
 
-Les scipts *scripts/backup.sh*, *scipts/backup_list_bucket.sh*, *scripts/backup_list*, *scripts/files.sh*, *scripts/backup_recover.sh* ont besoin que des **variables d'environnements** et des **variables locales** soient initialisées.
+Les scipts *scripts/backup.sh*, *scipts/backup_list_bucket.sh*, *scripts/backup_list_files.sh*, *scripts/backup_recover.sh* ont besoin que des *variables d'environnements* et des *variables locales* soient initialisées.
 
 Varaibles d'envirronnement pour le chiffrement gpg
 
@@ -50,17 +60,10 @@ Si ces variables n'existe pas, elles prennent une valeur défaut
 * FULL_BACKUP_TIME : Effectue un sauvegarde complet tous les X temps. (défaut: *1M*)
 * REMOVE_BACK_TIME : Efface les sauvegardes les plus anciens après X temps. (défaut: *6M*)
 * SRC_PATH : Chemin du répertoir à sauvegarder. (defaut: *A COMPLETER*)
-* LOG_PATH : Chemin oú écrire les log.i (défaut: */var/log*)
+* LOG_PATH : Chemin oú écrire les log (défaut: */var/log*)
 
 
 
-**backup.sh** : Effectue la sauvegarde.
-
-**backup_list_bucket.sh** : Liste l'ensemble des sauvegardes sur le bucket.
-
-**backup_list_files.sh** : Liste les fichiers et répertoires dans une sauvegarde.
-
-**backup_recover.sh**: Récupère une sauvegarde complète ou un fichier ou répertoire précis.
 
 
 
