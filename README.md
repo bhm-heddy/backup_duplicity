@@ -55,8 +55,11 @@ Si ces variables n'existe pas, elles prennent une valeur défaut
 
 
 **backup.sh** : Effectue la sauvegarde.
+
 **backup_list_bucket.sh** : Liste l'ensemble des sauvegardes sur le bucket.
-**backup_list_files.sh** : Liste les fichiers et répertoires dans une sauvegarde 
+
+**backup_list_files.sh** : Liste les fichiers et répertoires dans une sauvegarde.
+
 **backup_recover.sh**: Récupère une sauvegarde complète ou un fichier ou répertoire précis.
 
 
