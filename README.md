@@ -56,7 +56,7 @@ Variables d'environnement pour le bucket S3
 * SCW_BUCKET : Le nom du bucket
 
 Variables locales de configuration de la sauvegarde.
-Si ces variables n'existe pas, elles prennent une valeur défaut
+Si ces variables n'existent pas, elles prennent une valeur défaut
 * FULL_BACKUP_TIME : Effectue un sauvegarde complet tous les X temps. (défaut: *1M*)
 * REMOVE_BACK_TIME : Efface les sauvegardes les plus anciens après X temps. (défaut: *6M*)
 * SRC_PATH : Chemin du répertoir à sauvegarder. (defaut: *A COMPLETER*)
