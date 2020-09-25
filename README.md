@@ -90,7 +90,7 @@ Renseigner les variables des fichiers de configuration et les déplacer dans */e
 #### Utilisation
 `backup /etc/backup_auth_conf /etc/backup_cfg.conf`
 
-`bacup_list_bucket /etc/backup_auth.conf`
+`backup_list_bucket /etc/backup_auth.conf`
 
 `backup_recover /etc/backup_auth.conf`
 
