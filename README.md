@@ -4,10 +4,10 @@
 
 #### Installer duplicity
 ubutun 16.04 LTS
-	`sudo snap install duplicity --classic`
+`sudo snap install duplicity --classic`
 	
 Ubuntu 20.04.1 LTS
-	`sudo apt-get update && sudo apt-get install duplicity -y`
+`sudo apt-get update && sudo apt-get install duplicity -y`
 
 #### Installer les dépendances necessaire pour le protocol s3
 
