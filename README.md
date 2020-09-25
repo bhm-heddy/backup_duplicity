@@ -5,6 +5,7 @@
 #### Installer duplicity
 ubutun 16.04 LTS
 	`sudo snap install duplicity --classic`
+	
 Ubuntu 20.04.1 LTS
 	`sudo apt-get update && sudo apt-get install duplicity -y`
 
@@ -32,28 +33,39 @@ Ubuntu 20.04.1 LTS
 
 Les scipts *scripts/backup.sh*, *scipts/backup_list_bucket.sh*, *scripts/backup_list*, *scripts/files.sh*, *scripts/backup_recover.sh* ont besoin que des **variables d'environnements** et des **variables locales** soient initialisées.
 
-**Varaibles** d'envirronnement pour le chiffrement gpg
+Varaibles d'envirronnement pour le chiffrement gpg
+
 **ENC_KEY** : Le fingerprint de la clé de chiffrement
+
 **SIG_KEY** : Le fingerprint de la clé de signature
+
 **PASSPHRASE** : Le mot de passe de la clé de chiffrement
+
 **$SIGN_PASSPHRASE** : Le mot de passe de la cle de signature
 
 Variables d'environnement pour le bucket S3
+
 **AWS_ACCESS_KEY_ID** : L'ID du bucket cloud storage
+
 **AWS_SECRET_ACCESS_KEY** : Le mot de passe du bucket
+
 **$SCW_BUCKET** : Le nom du bucket
 
 
 Variables locales de configuration de la sauvegarde
 Si ces variables n'existe pas, elles prennent une valeur défaut
+
 **FULL_BACKUP_TIME** : Effectue un sauvegarde complet tous les X temps. (défaut: *1M*)
+
 **REMOVE_BACK_TIME** : Efface les sauvegardes les plus anciens après X temps. (défaut: *6M*)
+
 **SRC_PATH** : Chemin du répertoir à sauvegarder. (defaut: *A COMPLETER*)
+
 **LOG_PATH** : Chemin oú écrire les log.i (défaut: */var/log*)
 
 
 
-backup.sh : Effectue la sauvegarde.
+**backup.sh** : Effectue la sauvegarde.
 * enc_key
 * sig_key
 * passphrase
@@ -66,9 +78,9 @@ backup.sh : Effectue la sauvegarde.
 * remove_backup_time
 * full_backup_time
 
-backup_list_bucket.sh : Liste l'ensemble des sauvegardes sur le bucket.
-backup_list_files.sh : Liste les fichiers et répertoires dans une sauvegarde 
-backup_recover.sh : Récupère une sauvegarde complète ou un fichier ou répertoire précis.
+**backup_list_bucket.sh** : Liste l'ensemble des sauvegardes sur le bucket.
+**backup_list_files.sh** : Liste les fichiers et répertoires dans une sauvegarde 
+**backup_recover.sh**: Récupère une sauvegarde complète ou un fichier ou répertoire précis.
 * enc_key
 * sig_key
 * passphrase
