@@ -4,16 +4,17 @@
 
 #### Installer duplicity
 ubutun 16.04 LTS
-	sudo snap install duplicity --classic
+	`sudo snap install duplicity --classic`
 Ubuntu 20.04.1 LTS
 	`sudo apt-get update && sudo apt-get install duplicity -y`
 
 #### Installer les dépendances necessaire pour le protocol s3
 
 ubutun 16.04 LTS
-  `sudo apt-get install -y python-boto`
+
+`sudo apt-get install -y python-boto`
 Ubuntu 20.04.1 LTS
- `sudo apt-get install -y python3-boto`
+`sudo apt-get install -y python3-boto`
 
 #### Créer la clé de chiffrement
   `sudo gpg --full-generate-key`
@@ -66,23 +67,7 @@ backup.sh : Effectue la sauvegarde.
 * full_backup_time
 
 backup_list_bucket.sh : Liste l'ensemble des sauvegardes sur le bucket.
-* enc_key
-* sig_key
-* passphrase
-* sign_passphrase
-* aws_access_key_id
-* aws_secret_access_key
-* scw_bucket
-
-backup_list_files.sh : Liste les fichiers et répertoires dans une sauvegarde précise.
-* enc_key
-* sig_key
-* passphrase
-* sign_passphrase
-* aws_access_key_id
-* aws_secret_access_key
-* scw_bucket
-
+backup_list_files.sh : Liste les fichiers et répertoires dans une sauvegarde 
 backup_recover.sh : Récupère une sauvegarde complète ou un fichier ou répertoire précis.
 * enc_key
 * sig_key
@@ -102,9 +87,11 @@ Pour ne pas à avoir à copier des fichiers et répertoires volumineux, l'utilis
 `ln -s /rèpertoire_à_sauvegardè ~/backup/ŕepertoire`
 
 Déplacer les scripts dans */usr/sbin*
+
 `cp scripts/*.sh /usr/sbin`
 
 Renseigner les variables des fichiers de configuration et les déplacer dans */etc*
+
 `cp backup_auth.conf backup_cfg.conf /etc`
 
 #### Utilisation
