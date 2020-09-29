@@ -41,7 +41,7 @@ gleaning()
 	then
 		TIME=0
 	fi
-	echo -n "Indiquer le chmin où stocker le backup (path/<NAME BACKUP>) : "
+	echo -n "Indiquer le chemin où stocker le backup (path/<NAME BACKUP>) : "
 	read DST
 	if [ $OPT -eq 4 ]
 	then
