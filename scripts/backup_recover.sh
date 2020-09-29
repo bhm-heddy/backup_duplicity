@@ -19,7 +19,7 @@ if [ -z $ENC_KEY ] || [ -z $SIG_KEY ] \
 	|| [ -z $AWS_ACCESS_KEY_ID ] || [ -z $AWS_SECRET_ACCESS_KEY ] \
 	|| [ -z $SCW_BUCKET ]
 then
-	>&2 echo "message d erreur + info"
+	>&2 echo "Une ou des variables n'ont pas été initialisées. Voir README.ME"
 	exit 1
 fi
 
