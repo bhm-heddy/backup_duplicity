@@ -6,7 +6,7 @@ for av in $@; do
 	if [ -r $av ]; then
 		source $av
 	else
-		>&2 echo "Fichier inexistant ou de permissions: $av"
+		>&2 echo "Fichier inexistant ou permissions insuffisantes: $av"
 		exit 1
 	fi
 done
