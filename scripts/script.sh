@@ -37,7 +37,7 @@ echo -e "\t--- Removing old backups\n" >>$LOG_PATH/backup_$DATE.log
 
 ## Suppression des plus vieux backup
 
-duplicity \
+sudo duplicity \
 	remove-older-than "$REMOVE_BACKUP_TIME" \
 	--verbosity 8 \
 	--sign-key "$SIG_KEY" \
@@ -56,7 +56,7 @@ echo -e "\t--- Creating and uploading backup\n" >>$LOG_PATH/backup_$DATE.log
 
 ## Sauvegarde
 
-duplicity \
+sudo duplicity \
 	--full-if-older-than "$FULL_BACKUP_TIME" \
 	--copy-links \
 	--verbosity 8 \
@@ -86,7 +86,7 @@ exit 0
 
 
 list_bucket(){
-duplicity \
+sudo duplicity \
 	collection-status \
 	--encrypt-key "$ENC_KEY" \
 	--sign-key "$SIG_KEY" \
@@ -94,20 +94,20 @@ duplicity \
 }
 
 
-list_file(){
-CONSIGNE="Entrer :\n- Une date specifique\n- Vide ou 0 pour le backup le plus récent\n- 1 pour afficher les details des backup\n   ->: "
+list_files(){
+CONSIGNE1="Entrer :\n- Une date specifique\n- Vide ou 0 pour le backup le plus récent\n- 1 pour afficher les details des backup\n   ->: "
 
 
 echo -e $TIME_FORMAT
 
-echo -ne "$CONSIGNE"
+echo -ne "$CONSIGNE1"
 
 read TIME
 
 while [ "$TIME"  == "1" ]
 do
 	list_bucket
-	echo -ne "\n\n$CONSIGNE"
+	echo -ne "\n\n$CONSIGNE1"
 	read TIME
 done
 
@@ -116,7 +116,7 @@ then
 	TIME=0
 fi
 
-duplicity \
+sudo duplicity \
 	list-current-files -t $TIME \
 	--encrypt-key "$ENC_KEY" \
 	--sign-key "$SIG_KEY" \
@@ -126,13 +126,11 @@ duplicity \
 
 
 list(){
-	echo -ne "Afficher le détail du bucket (1) \n \
-		Afficher le detail d'un backup (2) \n
-		: "
+	echo -ne "Afficher le détail du bucket (1) \nAfficher le detail d'un backup (2)\n(1/2) : "
 	read CHOICE
-	if [ "$CHOICE" = "1" ]
+	if [ "$CHOICE" = "1" ]; then
 		list_bucket
-	elif [ "$CHOICE" = "2" ]
+	elif [ "$CHOICE" = "2" ]; then
 		list_file
 	else
 		exit 1
@@ -164,14 +162,14 @@ gleaning(){
 
 recover(){
 
-CONSIGNE="
+CONSIGNE2="
 Afficher les détails des backup (1)
 Afficher les details d un backup (2)
 Restorer un backup entier (3)
 Restorer un fichier precis (4)"
 
 
-echo -en  "$CONSIGNE\n(1-4): "
+echo -en  "$CONSIGNE2\n(1-4): "
 read OPT
 
 while [ "$OPT" -le 2 ]
@@ -183,32 +181,30 @@ do
 	then
 		list_files
 	fi
-	echo -en "$CONSIGNE\n(1-4): "
+	echo -en "$CONSIGNE2\n(1-4): "
 	read OPT
 done
 
 echo -e $TIME_FORMAT
 
-if [ "$OPT" -eq 3 ]
-then
+if [ "$OPT" = "3" ]; then
 	gleaning
-	duplicity \
+	sudo duplicity \
 		-t "$TIME" \
 		--encrypt-key "$ENC_KEY" \
 		--sign-key "$SIG_KEY" \
 		"$SCW_BUCKET" "$DST"
 
-elif [ "$OPT" -eq 4 ]
-then
+elif [ "$OPT" = "4" ]; then
 	gleaning
-	duplicity \
+	sudo duplicity \
 		-t $TIME \
 		--file-to-restore "$FILE" \
 		--encrypt-key "$ENC_KEY" \
 		--sign-key "$SIG_KEY" \
 		"$SCW_BUCKET" "$DST"
 fi
-
+}
 
 
 sourcefile(){
@@ -236,7 +232,7 @@ done
 
 # Initialise ces variables si elles n'existent pas
 
-SRC_PATH=${SRC_PATH:-/var/lib/backup}
+SRC_PATH=${SRC_PATH:-~/backup}
 LOG_PATH=${LOG_PATH:-/var/log}
 REMOVE_BACKUP_TIME=${REMOVE_BACKUP_TIME:-6M}
 FULL_BACKUP_TIME=${FULL_BACKUP_TIME:-1M}
@@ -253,12 +249,13 @@ then
 	exit $E_ERREURENV
 fi
 
-if [ ARGS = "BACKUP" ]
+if [ $ARGS = "BACKUP" ]; then
 	backup
-elif [ ARGS = "LIST" ]
+elif [ $ARGS = "LIST" ]; then
 	list
-elif [ ARGS = "RECOVER"]
+elif [ $ARGS = "RECOVER" ]; then
 	recover
 fi
+
 
 exit 0
