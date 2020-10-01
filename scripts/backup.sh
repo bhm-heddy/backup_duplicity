@@ -57,9 +57,9 @@ ft_backup(){
 ## Active le mode maintenance de nextcloud
 ## Copie intégrale du nextcloud
 ## Path de la copie socker dans nextcloud_backup
-NEXTCLOUD_BACKUP=`sudo nextcloud.export -c | grep Successfully | cut -d " " -f3`
+NEXTCLOUD_BACKUP=`sudo nextcloud.export | grep Successfully | cut -d " " -f3`
 
-if [ $NEXTCLOUD_BACKUP -z ]; then
+if [ $NEXTCLOUD_BACKUP -z ] ; then
 	>&2 echo "[BACKUP ERROR] nextcloud.export a échouée"
 	exit 62
 fi
@@ -109,8 +109,8 @@ fi
 
 
 #Suppression du lien symbolique et de la copie de nextcloud
-rm "$SRC_PATH/`basename $NEXTCLOUD_BACKUP`"
-rm $NEXTCLOUD_BACKUP
+rm -rf "$SRC_PATH/`basename $NEXTCLOUD_BACKUP`"
+rm -rf $NEXTCLOUD_BACKUP
 
 
 exit 0
