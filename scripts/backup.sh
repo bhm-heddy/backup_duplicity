@@ -16,7 +16,8 @@ ARGS=0
 #Path nextcloud, defaut nextcloud installé par snap
 NEXTCLOUD_OCC=${NEXTCLOUD_OCC:-/snap/bin/nextcloud.occ}
 NEXTCLOUD_SQLDUMP=${NEXTCLOUD_SQLDUMP:-/snap/bin/nextcloud.mysqldump}
-FILE_SQLDUMP=nextcloudsql_backup_$DATE-$DAY.bak
+NEXTCLOUD_EXPORT=${NEXTCLOUD_EXPORT:-/snap/bin/nextcloud.export}
+
 
 
 
@@ -47,26 +48,24 @@ ft_backup(){
 
 
 ## Active le mode maintenance de nextcloud
-sudo $NEXTCLOUD_OCC maintenance:mode --on
+#sudo $NEXTCLOUD_OCC maintenance:mode --on
+#if [ $? -ne 0 ]; then
+#	>&2 echo "[BACKUP ERROR]   L activation du monde maintenance a échouée"
+#	exit $E_ERREURNC
+#fi
 
-if [ $? -ne 0 ]; then
-	>&2 echo "[BACKUP ERROR]   L activation du monde maintenance a échouée"
-	exit $E_ERREURNC
+## Active le mode maintenance de nextcloud
+## Copie intégrale du nextcloud
+## Path de la copie socker dans nextcloud_backup
+NEXTCLOUD_BACKUP=`sudo nextcloud.export -c | grep Successfully | cut -d " " -f3`
+
+if [ $NEXTCLOUD_BACKUP -z ]; then
+	>&2 echo "[BACKUP ERROR] nextcloud.export a échouée"
+	exit 62
 fi
 
-
-## Dump de la base de donnée SQL
-sudo $NEXTCLOUD_SQLDUMP >/tmp/$FILE_SQLDUMP
-
-if [ $? -ne 0 ]; then
-	>&2 echo "[BACKUP ERROR]   Le dump de la base de donnée MySql a échouée"
-	exit $E_ERREURNC
-fi
-
-
-## Creation du lien symbolique pour le backup
-ln -s /tmp/$FILE_SQLDUMP "$SRC_PATH"
-
+## Creation du lien symbolique
+ln -s $NEXTCLOUD_BACKUP "$SRC_PATH"
 
 
 echo -e "\t\t[BACKUP]\t$DATE-$DAY\t$HOUR\n" >>$LOG_PATH/backup_$DATE.log
@@ -109,17 +108,10 @@ if [ $? -ne 0 ]; then
 fi
 
 
-#Suppression du lien symbolique du dump de la base de donnée
-rm "$SRC_PATH/$FILE_SQLDUMP"
+#Suppression du lien symbolique et de la copie de nextcloud
+rm "$SRC_PATH/`basename $NEXTCLOUD_BACKUP`"
+rm $NEXTCLOUD_BACKUP
 
-
-## Desactive le mode maintenance
-sudo $NEXTCLOUD_OCC maintenance:mode --off
-
-if [ $? -ne 0 ]; then
-	>&2 echo "[BACKUP ERROR]   La désactivation du monde maintenance a échouée"
-	exit $E_ERREURNC 
-fi
 
 exit 0
 }
