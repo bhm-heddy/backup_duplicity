@@ -58,7 +58,7 @@ ft_backup(){
 ## Copie intégrale du nextcloud
 ## Path de la copie socker dans nextcloud_backup
 
-NEXTCLOUD_BACKUP=`sudo nextcloud.export -c | grep Successfully | cut -d " " -f3`
+NEXTCLOUD_BACKUP=`sudo nextcloud.export | grep Successfully | cut -d " " -f3`
 
 if [ -z "$NEXTCLOUD_BACKUP" ]; then
 	>&2 echo "[BACKUP ERROR] nextcloud.export a échouée"
