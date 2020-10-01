@@ -197,8 +197,8 @@ ft_gleaning(){
 ft_recover(){
 
 CONSIGNE2="
-Afficher les détails des backup (1)
-Afficher les details d un backup (2)
+Afficher les détails du bucket (1)
+Afficher les details d'un backup (2)
 Restorer un backup entier (3)
 Restorer un fichier precis (4)
 Quitter (5)"
