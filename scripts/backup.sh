@@ -204,7 +204,7 @@ Restorer un fichier precis (4)
 Quitter (5)"
 
 
-echo -en  "$CONSIGNE2\n(1-4): "
+echo -en  "$CONSIGNE2\n(1-5): "
 read OPT
 
 while [ "$OPT" -le 2 ]
@@ -218,11 +218,11 @@ do
 	read OPT
 done
 
-echo -e $TIME_FORMAT
-
 if [ "$OPT" -eq 5 ] ; then
 		exit 0
 fi
+
+echo -e $TIME_FORMAT
 
 if [ "$OPT" = "3" ]; then
 	ft_gleaning
