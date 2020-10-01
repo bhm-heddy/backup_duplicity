@@ -25,11 +25,11 @@ TIME_FORMAT='\n[TIME FORMAT]\nPlusieurs formats sont acceptés :\n- Un interval 
 
 
 # Quitte si aucun argument
-if [ $# -eq 0 ]
-then
-  echo "Erreur: au moins un argument attendu"
-  ft_usage
-fi
+#if [ $# -eq 0 ]
+#then
+#  echo "Erreur: au moins un argument attendu"
+#  ft_usage
+#fi
 
 
 #################################################################
@@ -261,12 +261,10 @@ ft_sourcefile(){
 
 
 # Parcourt les arguments
-while getopts ":blrs:" Option
+while getopts ":bs:" Option
 do
 	case $Option in
 	b ) ARGS="BACKUP";;
-	l ) ARGS="LIST";;
-	r ) ARGS="RECOVER";;
 	s ) ft_sourcefile;;
 	* ) ft_usage
 	esac
@@ -294,9 +292,7 @@ fi
 #Lance le mode en fonction de l'argument passé
 if [ $ARGS = "BACKUP" ]; then
 	ft_backup
-elif [ $ARGS = "LIST" ]; then
-	ft_list
-elif [ $ARGS = "RECOVER" ]; then
+else
 	ft_recover
 fi
 
