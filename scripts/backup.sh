@@ -11,6 +11,7 @@ ARGS=0
 
 #Path nextcloud, defaut nextcloud installé par snap
 NEXTCLOUD_OCC=${NEXTCLOUD_OCC:-/snap/bin/nextcloud.occ}
+NEXTCLOUD_SQLDUMP=${NEXTCLOUD_SQLDUMP:-/snap/bin/nextcloud.mysqldump}
 
 #date pour les logs
 DATE=`date +%Y-%m`
@@ -41,13 +42,19 @@ ft_usage(){
 
 ft_backup(){
 
+sudo $NEXTCLOUD_SQLDUMP >/tmp/nextcloudsql_backup_$DATE$DAY.bak
+exit 144
+
 ## Active le mode maintenance de nextcloud
 sudo $NEXTCLOUD_OCC maintenance:mode --on
 
 if [ $? -ne 0 ]; then
 	>&2 echo "[BACKUP ERROR]   L activation du monde maintenance a échouée"
-	exit $E_ERREURNC 
+	exit $E_ERREURNC
 fi
+
+
+
 
 echo -e "\t\t[BACKUP]\t$DATE-$DAY\t$HOUR\n" >>$LOG_PATH/backup_$DATE.log
 echo -e "\t--- Removing old backups\n" >>$LOG_PATH/backup_$DATE.log
