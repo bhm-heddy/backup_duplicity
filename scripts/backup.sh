@@ -60,9 +60,7 @@ ft_backup(){
 
 NEXTCLOUD_BACKUP=`sudo nextcloud.export -c | grep Successfully | cut -d " " -f3`
 
-echo $NEXTCLOUD_BACKUP
-
-if [ "$NEXTCLOUD_BACKUP" -z ]; then
+if [ -z "$NEXTCLOUD_BACKUP" ]; then
 	>&2 echo "[BACKUP ERROR] nextcloud.export a échouée"
 	exit 62
 fi
