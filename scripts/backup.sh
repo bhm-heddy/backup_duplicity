@@ -42,7 +42,9 @@ ft_usage(){
 
 ft_backup(){
 
-sudo $NEXTCLOUD_SQLDUMP >/tmp/nextcloudsql_backup_$DATE$DAY.bak
+sudo $NEXTCLOUD_SQLDUMP >/tmp/nextcloudsql_backup_$DATE-$DAY.bak
+ln -s /tmp/nextcloudsql_backup_$DATE-$DAY.bak "$SRC_PATH"
+
 exit 144
 
 ## Active le mode maintenance de nextcloud
