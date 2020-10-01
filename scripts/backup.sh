@@ -222,6 +222,7 @@ echo -e $TIME_FORMAT
 
 if [ "$OPT" -eq 5 ] ; then
 		exit 0
+fi
 
 if [ "$OPT" = "3" ]; then
 	ft_gleaning
