@@ -58,6 +58,12 @@ fi
 ## Dump de la base de donnée SQL
 sudo $NEXTCLOUD_SQLDUMP >/tmp/$FILE_SQLDUMP
 
+if [ $? -ne 0 ]; then
+	>&2 echo "[BACKUP ERROR]   Le dump de la base de donnée MySql a échouée"
+	exit $E_ERREURNC
+fi
+
+
 ## Creation du lien symbolique pour le backup
 ln -s /tmp/$FILE_SQLDUMP "$SRC_PATH"
 
