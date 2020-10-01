@@ -213,14 +213,15 @@ do
 		ft_list_bucket
 	elif [ "$OPT" -eq 2 ]; then
 		ft_list_files
-	elif [ "$OPT" -eq 5 ] ; then
-		exit 0
 	fi
-	echo -en "$CONSIGNE2\n(1-4): "
+	echo -en "$CONSIGNE2\n(1-5): "
 	read OPT
 done
 
 echo -e $TIME_FORMAT
+
+if [ "$OPT" -eq 5 ] ; then
+		exit 0
 
 if [ "$OPT" = "3" ]; then
 	ft_gleaning
