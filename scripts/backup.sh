@@ -6,7 +6,7 @@ E_ERREURENV=63
 E_ERREURNC=62
 
 ft_usage(){
-	echo "Usage: `basename $0` [-b backup] [-r recover] [-l liste] [ [-s <source file>]]"
+	echo "Usage: `basename $0` [-b backup] [-r recover] [-l list] [ [-s <source file>]]"
   	exit $E_ERREUROPTION
 }
 
