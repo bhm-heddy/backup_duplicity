@@ -57,9 +57,12 @@ ft_backup(){
 ## Active le mode maintenance de nextcloud
 ## Copie intégrale du nextcloud
 ## Path de la copie socker dans nextcloud_backup
-NEXTCLOUD_BACKUP=`sudo nextcloud.export | grep Successfully | cut -d " " -f3`
 
-if [ $NEXTCLOUD_BACKUP -z ] ; then
+NEXTCLOUD_BACKUP=`sudo nextcloud.export -c | grep Successfully | cut -d " " -f3`
+
+echo $NEXTCLOUD_BACKUP
+
+if [ "$NEXTCLOUD_BACKUP" -z ]; then
 	>&2 echo "[BACKUP ERROR] nextcloud.export a échouée"
 	exit 62
 fi
