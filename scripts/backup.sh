@@ -5,14 +5,14 @@ E_ERREURFILE=64
 E_ERREURENV=63
 E_ERREURNC=62
 
-ft_usage(){
-	echo "Usage: `basename $0` [-b backup] [-r recover] [-l list] [ [-s <source file>]]"
-  	exit $E_ERREUROPTION
-}
+
 
 ARGS=0
+
+#Path nextcloud, defaut nextcloud installé par snap
 NEXTCLOUD_OCC=${NEXTCLOUD_OCC:-/snap/bin/nextcloud.occ}
 
+#date pour les logs
 DATE=`date +%Y-%m`
 DAY=`date +%d`
 HOUR=`date +%H:%M:%S`
@@ -32,6 +32,12 @@ fi
 #################################################################
 #######		         FONCTIONS			#########
 #################################################################
+
+ft_usage(){
+	echo "Usage: `basename $0` [-b backup] [-r recover] [-l list] [ [-s <source file>]]"
+  	exit $E_ERREUROPTION
+}
+
 
 ft_backup(){
 
