@@ -37,7 +37,7 @@ TIME_FORMAT='\n[TIME FORMAT]\nPlusieurs formats sont acceptés :\n- Un interval 
 #################################################################
 
 ft_usage(){
-	echo "Usage: `basename $0` [-b backup] [-r recover] [-l list] [ [-s <source file>]]"
+	echo "Usage: `basename $0` [-b backup] [ [-s <source file>]]"
   	exit $E_ERREUROPTION
 }
 
@@ -200,7 +200,8 @@ CONSIGNE2="
 Afficher les détails des backup (1)
 Afficher les details d un backup (2)
 Restorer un backup entier (3)
-Restorer un fichier precis (4)"
+Restorer un fichier precis (4)
+Quitter (5)"
 
 
 echo -en  "$CONSIGNE2\n(1-4): "
@@ -208,12 +209,12 @@ read OPT
 
 while [ "$OPT" -le 2 ]
 do
-	if [ "$OPT" -eq 1 ]
-	then
+	if [ "$OPT" -eq 1 ]; then
 		ft_list_bucket
-	elif [ "$OPT" -eq 2 ]
-	then
+	elif [ "$OPT" -eq 2 ]; then
 		ft_list_files
+	elif [ "$OPT" -eq 5 ] ; then
+		exit 0
 	fi
 	echo -en "$CONSIGNE2\n(1-4): "
 	read OPT
