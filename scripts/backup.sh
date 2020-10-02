@@ -1,11 +1,12 @@
 #!/bin/bash
 
+##Exit erreurs
 E_ERREUROPTION=65
 E_ERREURFILE=64
 E_ERREURENV=63
 E_ERREURNC=62
 
-#date pour les logs
+##Date pour les logs
 DATE=`date +%Y-%m`
 DAY=`date +%d`
 HOUR=`date +%H:%M:%S`
@@ -13,7 +14,7 @@ HOUR=`date +%H:%M:%S`
 
 ARGS=0
 
-#Path nextcloud, defaut nextcloud installé par snap
+##Path nextcloud, defaut nextcloud installé par snap
 NEXTCLOUD_OCC=${NEXTCLOUD_OCC:-/snap/bin/nextcloud.occ}
 NEXTCLOUD_SQLDUMP=${NEXTCLOUD_SQLDUMP:-/snap/bin/nextcloud.mysqldump}
 NEXTCLOUD_EXPORT=${NEXTCLOUD_EXPORT:-/snap/bin/nextcloud.export}
