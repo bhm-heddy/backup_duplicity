@@ -46,20 +46,19 @@ ft_usage(){
 ft_backup(){
 
 
-
-## Active le mode maintenance de nextcloud
-#sudo $NEXTCLOUD_OCC maintenance:mode --on
-#if [ $? -ne 0 ]; then
-#	>&2 echo "[BACKUP ERROR]   L activation du monde maintenance a échouée"
-#	exit $E_ERREURNC
-#fi
-
 ## Active le mode maintenance de nextcloud
 ## Copie intégrale du nextcloud
 ## Path de la copie socker dans nextcloud_backup
 
-NEXTCLOUD_BACKUP=`sudo nextcloud.export | grep Successfully | cut -d " " -f3`
+NEXTCLOUD_BACKUP=`sudo nextcloud.export \
+	$OPTION_APP \
+	$OPTION_DB \
+	$OPTION_CFG \
+	$OPTION_DATA \
+	| grep Successfully | cut -d " " -f3`
 
+
+#Verification
 if [ -z "$NEXTCLOUD_BACKUP" ]; then
 	>&2 echo "[BACKUP ERROR] nextcloud.export a échouée"
 	exit 62
@@ -69,6 +68,7 @@ fi
 ln -s $NEXTCLOUD_BACKUP "$SRC_PATH"
 
 
+#log
 echo -e "\t\t[BACKUP]\t$DATE-$DAY\t$HOUR\n" >>$LOG_PATH/backup_$DATE.log
 echo -e "\t--- Removing old backups\n" >>$LOG_PATH/backup_$DATE.log
 
@@ -257,10 +257,14 @@ ft_sourcefile(){
 
 
 # Parcourt les arguments
-while getopts ":bs:" Option
+while getopts ":badcDs:" Option
 do
 	case $Option in
 	b ) ARGS="BACKUP";;
+	a ) OPTION_APP="-a";;
+	d ) OPTION_DB="-b";;
+	c ) OPTION_CFG="-c";;
+	D ) OPTION_DATA="-d";;
 	s ) ft_sourcefile;;
 	* ) ft_usage
 	esac
