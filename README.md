@@ -1,7 +1,7 @@
 # backup_duplicity
 
 
-**backup.sh** : Effectue une sauvegarde, afficher les sauvegardes et leurs contenus
+**backup.sh** : Effectue une sauvegarde sur un bucket s3, afficher les sauvegardes et leurs contenus
 
 
 # INSTALLATION
