@@ -33,119 +33,119 @@ ft_usage(){
 
 
 ft_backup(){
-## Active le mode maintenance de nextcloud
-sudo $NEXTCLOUD_OCC maintenance:mode --on
+	## Active le mode maintenance de nextcloud
+	sudo $NEXTCLOUD_OCC maintenance:mode --on
 
-if [ $? -ne 0 ]; then
-	>&2 echo "[BACKUP ERROR]   L activation du monde maintenance a échouée"
-	exit $E_ERREURNC
-fi
-
-
-## Dump de la base de donnée SQL
-sudo $NEXTCLOUD_SQLDUMP >/tmp/$FILE_SQLDUMP
-
-if [ $? -ne 0 ]; then
-	>&2 echo "[BACKUP ERROR]   Le dump de la base de donnée MySql a échouée"
-	exit $E_ERREURNC
-fi
+	if [ $? -ne 0 ]; then
+		>&2 echo "[BACKUP ERROR]   L activation du monde maintenance a échouée"
+		exit $E_ERREURNC
+	fi
 
 
-## Creation du lien symbolique pour le backup
-ln -s /tmp/$FILE_SQLDUMP "$SRC_PATH"
+	## Dump de la base de donnée SQL
+	sudo $NEXTCLOUD_SQLDUMP >/tmp/$FILE_SQLDUMP
+
+	if [ $? -ne 0 ]; then
+		>&2 echo "[BACKUP ERROR]   Le dump de la base de donnée MySql a échouée"
+		exit $E_ERREURNC
+	fi
 
 
-## Log
-echo -e "\t\t[BACKUP]\t$DATE-$DAY\t$HOUR\n" >>$LOG_PATH/backup_$DATE.log
-echo -e "\t--- Removing old backups\n" >>$LOG_PATH/backup_$DATE.log
+	## Creation du lien symbolique pour le backup
+	ln -s /tmp/$FILE_SQLDUMP "$SRC_PATH"
 
 
-## Suppression des plus vieux backup
-duplicity \
-	remove-older-than "$REMOVE_BACKUP_TIME" \
-	--verbosity 8 \
-	--sign-key "$SIG_KEY" \
-	--num-retries 3 \
-	"$SCW_BUCKET" \
-	>>"$LOG_PATH"/backup_$DATE.log \
-	2>&1
-
-if [ $? -ne 0 ]; then
-	>&2 echo "[BACKUP ERROR]  La suppression des anciens backup a échouée."
-fi
-
-#Log
-echo -e "\t--- Creating and uploading backup\n" >>$LOG_PATH/backup_$DATE.log
+	## Log
+	echo -e "\t\t[BACKUP]\t$DATE-$DAY\t$HOUR\n" >>$LOG_PATH/backup_$DATE.log
+	echo -e "\t--- Removing old backups\n" >>$LOG_PATH/backup_$DATE.log
 
 
-## Sauvegarde
-duplicity \
-	--full-if-older-than "$FULL_BACKUP_TIME" \
-	--copy-links \
-	--verbosity 8 \
-	--encrypt-key "$ENC_KEY" \
-	--sign-key "$SIG_KEY" \
-	--num-retries 3 \
-	--asynchronous-upload \
-	"$SRC_PATH" "$SCW_BUCKET" \
-	>>"$LOG_PATH"/backup_$DATE.log \
-	2>&1
+	## Suppression des plus vieux backup
+	duplicity \
+		remove-older-than "$REMOVE_BACKUP_TIME" \
+		--verbosity 8 \
+		--sign-key "$SIG_KEY" \
+		--num-retries 3 \
+		"$SCW_BUCKET" \
+		>>"$LOG_PATH"/backup_$DATE.log \
+		2>&1
 
-if [ $? -ne 0 ]; then
-	>&2 echo "[BACKUP ERROR]  La sauvegarde a échouée."
-fi
+	if [ $? -ne 0 ]; then
+		>&2 echo "[BACKUP ERROR]  La suppression des anciens backup a échouée."
+	fi
 
-
-#Suppression du lien symbolique du dump de la base de donnée
-rm "$SRC_PATH/$FILE_SQLDUMP"
+	#Log
+	echo -e "\t--- Creating and uploading backup\n" >>$LOG_PATH/backup_$DATE.log
 
 
-## Desactive le mode maintenance
-sudo $NEXTCLOUD_OCC maintenance:mode --off
+	## Sauvegarde
+	duplicity \
+		--full-if-older-than "$FULL_BACKUP_TIME" \
+		--copy-links \
+		--verbosity 8 \
+		--encrypt-key "$ENC_KEY" \
+		--sign-key "$SIG_KEY" \
+		--num-retries 3 \
+		--asynchronous-upload \
+		"$SRC_PATH" "$SCW_BUCKET" \
+		>>"$LOG_PATH"/backup_$DATE.log \
+		2>&1
 
-if [ $? -ne 0 ]; then
-	>&2 echo "[BACKUP ERROR]   La désactivation du monde maintenance a échouée"
-	exit $E_ERREURNC 
-fi
+	if [ $? -ne 0 ]; then
+		>&2 echo "[BACKUP ERROR]  La sauvegarde a échouée."
+	fi
 
-exit 0
+
+	#Suppression du lien symbolique du dump de la base de donnée
+	rm "$SRC_PATH/$FILE_SQLDUMP"
+
+
+	## Desactive le mode maintenance
+	sudo $NEXTCLOUD_OCC maintenance:mode --off
+
+	if [ $? -ne 0 ]; then
+		>&2 echo "[BACKUP ERROR]   La désactivation du monde maintenance a échouée"
+		exit $E_ERREURNC 
+	fi
+
+	exit 0
 }
 
 ## Liste le bucket
 ft_list_bucket(){
-duplicity \
-	collection-status \
-	--encrypt-key "$ENC_KEY" \
-	--sign-key "$SIG_KEY" \
-	"$SCW_BUCKET"
+	duplicity \
+		collection-status \
+		--encrypt-key "$ENC_KEY" \
+		--sign-key "$SIG_KEY" \
+		"$SCW_BUCKET"
 }
 
 ## Liste une sauvegarde
 ft_list_files(){
-CONSIGNE1="Entrer :\n- Une date specifique\n- Vide ou 0 pour le backup le plus récent\n- 1 pour afficher les details des backup\n   ->: "
+	CONSIGNE1="Entrer :\n- Une date specifique\n- Vide ou 0 pour le backup le plus récent\n- 1 pour afficher les details des backup\n   ->: "
 
-echo -e $TIME_FORMAT
-echo -ne "$CONSIGNE1"
+	echo -e $TIME_FORMAT
+	echo -ne "$CONSIGNE1"
 
-read TIME
-
-while [ "$TIME"  == "1" ]
-do
-	ft_list_bucket
-	echo -ne "\n\n$CONSIGNE1"
 	read TIME
-done
 
-if [ -z $TIME ]
-then
-	TIME=0
-fi
+	while [ "$TIME"  == "1" ]
+	do
+		ft_list_bucket
+		echo -ne "\n\n$CONSIGNE1"
+		read TIME
+	done
 
-duplicity \
-	list-current-files -t $TIME \
-	--encrypt-key "$ENC_KEY" \
-	--sign-key "$SIG_KEY" \
-	"$SCW_BUCKET"
+	if [ -z $TIME ]
+	then
+		TIME=0
+	fi
+
+	duplicity \
+		list-current-files -t $TIME \
+		--encrypt-key "$ENC_KEY" \
+		--sign-key "$SIG_KEY" \
+		"$SCW_BUCKET"
 }
 
 
@@ -181,52 +181,51 @@ ft_gleaning(){
 
 ## Mode recover 
 ft_recover(){
+	CONSIGNE2="
+	Afficher les détails du bucket (1)
+	Afficher les details d'un backup (2)
+	Restorer un backup entier (3)
+	Restorer un fichier precis (4)
+	Quitter (5)"
 
-CONSIGNE2="
-Afficher les détails du bucket (1)
-Afficher les details d'un backup (2)
-Restorer un backup entier (3)
-Restorer un fichier precis (4)
-Quitter (5)"
 
-
-echo -en  "$CONSIGNE2\n(1-5): "
-read OPT
-
-while [ "$OPT" -le 2 ]
-do
-	if [ "$OPT" -eq 1 ]; then
-		ft_list_bucket
-	elif [ "$OPT" -eq 2 ]; then
-		ft_list_files
-	fi
-	echo -en "$CONSIGNE2\n(1-5): "
+	echo -en  "$CONSIGNE2\n(1-5): "
 	read OPT
-done
 
-if [ "$OPT" -eq 5 ] ; then
-		exit 0
-fi
+	while [ "$OPT" -le 2 ]
+	do
+		if [ "$OPT" -eq 1 ]; then
+			ft_list_bucket
+		elif [ "$OPT" -eq 2 ]; then
+			ft_list_files
+		fi
+		echo -en "$CONSIGNE2\n(1-5): "
+		read OPT
+	done
 
-echo -e $TIME_FORMAT
+	if [ "$OPT" -eq 5 ] ; then
+			exit 0
+	fi
 
-if [ "$OPT" = "3" ]; then
-	ft_gleaning
-	duplicity \
-		-t "$TIME" \
-		--encrypt-key "$ENC_KEY" \
-		--sign-key "$SIG_KEY" \
-		"$SCW_BUCKET" "$DST"
+	echo -e $TIME_FORMAT
 
-elif [ "$OPT" = "4" ]; then
-	ft_gleaning
-	duplicity \
-		-t $TIME \
-		--file-to-restore "$FILE" \
-		--encrypt-key "$ENC_KEY" \
-		--sign-key "$SIG_KEY" \
-		"$SCW_BUCKET" "$DST"
-fi
+	if [ "$OPT" = "3" ]; then
+		ft_gleaning
+		duplicity \
+			-t "$TIME" \
+			--encrypt-key "$ENC_KEY" \
+			--sign-key "$SIG_KEY" \
+			"$SCW_BUCKET" "$DST"
+
+	elif [ "$OPT" = "4" ]; then
+		ft_gleaning
+		duplicity \
+			-t $TIME \
+			--file-to-restore "$FILE" \
+			--encrypt-key "$ENC_KEY" \
+			--sign-key "$SIG_KEY" \
+			"$SCW_BUCKET" "$DST"
+	fi
 }
 
 ## Source les fichiers passés en parametres avec l'option -s
