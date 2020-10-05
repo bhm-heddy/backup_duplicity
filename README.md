@@ -1,13 +1,7 @@
 # backup_duplicity
 
 
-**backup.sh** : Effectue la sauvegarde.
-
-**backup_list_bucket.sh** : Liste l'ensemble des sauvegardes sur le bucket.
-
-**backup_list_files.sh** : Liste les fichiers et répertoires dans une sauvegarde.
-
-**backup_recover.sh**: Récupère une sauvegarde complète ou un fichier ou répertoire précis.
+**backup.sh** : Effectue une sauvegarde, afficher les sauvegardes et leurs contenus
 
 
 # INSTALLATION
@@ -41,7 +35,7 @@ Ubuntu 20.04.1 LTS
 
 ## Fonctionnement
 
-Les scipts *scripts/backup.sh*, *scipts/backup_list_bucket.sh*, *scripts/backup_list_files.sh*, *scripts/backup_recover.sh* ont besoin que des *variables d'environnements* et des *variables locales* soient initialisées.
+*scripts/backup.sh* a besoin que des *variables d'environnements* et des *variables locales* soient initialisées.
 
 Varaibles d'envirronnement pour le chiffrement gpg
 * ENC_KEY : Le fingerprint de la clé de chiffrement
