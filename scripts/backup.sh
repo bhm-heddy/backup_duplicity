@@ -20,9 +20,7 @@ FILE_SQLDUMP=nextcloudsql_backup_$DATE-$DAY.bak
 
 
 
-
 TIME_FORMAT='\n[TIME FORMAT]\nPlusieurs formats sont acceptés :\n- Un interval : s, m, h, D, W, M, or Y (indique secondes, minutes, heures, jours, semaine, mois, or années respectivement). Exemple "1h78m" correspond à une heure et 78 minutes. Un mois est toujours égal a 35jours et une année à 365 jours.\n- Une date précise  "2002-04-26T04:22:01" ou "2/4/1997" ou "2001-04-23"\nDe nombreuses combinaisons sont acceptables. Man duplicity, section "Time format" pour plus d information.\n\n'
-
 
 
 

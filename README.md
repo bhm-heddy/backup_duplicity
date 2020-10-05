@@ -44,7 +44,6 @@ Ubuntu 20.04.1 LTS
 Les scipts *scripts/backup.sh*, *scipts/backup_list_bucket.sh*, *scripts/backup_list_files.sh*, *scripts/backup_recover.sh* ont besoin que des *variables d'environnements* et des *variables locales* soient initialisées.
 
 Varaibles d'envirronnement pour le chiffrement gpg
-
 * ENC_KEY : Le fingerprint de la clé de chiffrement
 * SIG_KEY : Le fingerprint de la clé de signature
 * PASSPHRASE : Le mot de passe de la clé de chiffrement
@@ -61,9 +60,6 @@ Si ces variables n'existent pas, elles prennent une valeur défaut
 * REMOVE_BACK_TIME : Efface les sauvegardes les plus anciens après X temps. (défaut: *6M*)
 * SRC_PATH : Chemin du répertoir à sauvegarder. (defaut: *A COMPLETER*)
 * LOG_PATH : Chemin oú écrire les log (défaut: */var/log*)
-
-
-
 
 
 
