@@ -111,7 +111,7 @@ rm -rf $NEXTCLOUD_BACKUP
 exit 0
 }
 
-
+## Liste le bucket
 ft_list_bucket(){
 duplicity \
 	collection-status \
@@ -120,7 +120,7 @@ duplicity \
 	"$SCW_BUCKET"
 }
 
-
+# List les fichiers d une sauvegarde
 ft_list_files(){
 CONSIGNE1="Entrer :\n- Une date specifique\n- Vide ou 0 pour le backup le plus récent\n- 1 pour afficher les details des backup\n   ->: "
 
@@ -151,7 +151,7 @@ duplicity \
 }
 
 
-
+## Propose de lister les sauvegardes ou les fichiers d'une sauvegarde
 ft_list(){
 	echo -ne "Afficher le détail du bucket (1) \nAfficher le detail d'un backup (2)\n(1/2) : "
 	read CHOICE
@@ -230,7 +230,7 @@ elif [ "$OPT" = "4" ]; then
 fi
 }
 
-
+## Source les fichiers passés en parametres avec l'option -s 
 ft_sourcefile(){
 	if [ -r "$OPTARG" ]; then
 		source "$OPTARG"
