@@ -1,15 +1,15 @@
 #!/bin/bash
 
+## exit code
 E_ERREUROPTION=65
 E_ERREURFILE=64
 E_ERREURENV=63
 E_ERREURNC=62
 
-#date pour les logs
+# date pour les logs
 DATE=`date +%Y-%m`
 DAY=`date +%d`
 HOUR=`date +%H:%M:%S`
-
 
 ARGS=0
 
@@ -17,8 +17,6 @@ ARGS=0
 NEXTCLOUD_OCC=${NEXTCLOUD_OCC:-/snap/bin/nextcloud.occ}
 NEXTCLOUD_SQLDUMP=${NEXTCLOUD_SQLDUMP:-/snap/bin/nextcloud.mysqldump}
 FILE_SQLDUMP=nextcloudsql_backup_$DATE-$DAY.bak
-
-
 
 TIME_FORMAT='\n[TIME FORMAT]\nPlusieurs formats sont acceptés :\n- Un interval : s, m, h, D, W, M, or Y (indique secondes, minutes, heures, jours, semaine, mois, or années respectivement). Exemple "1h78m" correspond à une heure et 78 minutes. Un mois est toujours égal a 35jours et une année à 365 jours.\n- Une date précise  "2002-04-26T04:22:01" ou "2/4/1997" ou "2001-04-23"\nDe nombreuses combinaisons sont acceptables. Man duplicity, section "Time format" pour plus d information.\n\n'
 
@@ -35,7 +33,6 @@ ft_usage(){
 
 
 ft_backup(){
-
 ## Active le mode maintenance de nextcloud
 sudo $NEXTCLOUD_OCC maintenance:mode --on
 
@@ -127,9 +124,7 @@ duplicity \
 ft_list_files(){
 CONSIGNE1="Entrer :\n- Une date specifique\n- Vide ou 0 pour le backup le plus récent\n- 1 pour afficher les details des backup\n   ->: "
 
-
 echo -e $TIME_FORMAT
-
 echo -ne "$CONSIGNE1"
 
 read TIME
