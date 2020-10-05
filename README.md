@@ -67,7 +67,7 @@ Pour ne pas à avoir à copier des fichiers et répertoires volumineux, l'utilis
 
 Rendre les scripts exècutables 
 
-`chmod +x scripts/*.sh `
+`chmod +x scripts/backup.sh `
 
 Déplacer les scripts dans */usr/sbin*
 
