@@ -26,20 +26,13 @@ NEXTCLOUD_EXPORT=${NEXTCLOUD_EXPORT:-/snap/bin/nextcloud.export}
 TIME_FORMAT='\n[TIME FORMAT]\nPlusieurs formats sont acceptés :\n- Un interval : s, m, h, D, W, M, or Y (indique secondes, minutes, heures, jours, semaine, mois, or années respectivement). Exemple "1h78m" correspond à une heure et 78 minutes. Un mois est toujours égal a 35jours et une année à 365 jours.\n- Une date précise  "2002-04-26T04:22:01" ou "2/4/1997" ou "2001-04-23"\nDe nombreuses combinaisons sont acceptables. Man duplicity, section "Time format" pour plus d information.\n\n'
 
 
-# Quitte si aucun argument
-#if [ $# -eq 0 ]
-#then
-#  echo "Erreur: au moins un argument attendu"
-#  ft_usage
-#fi
-
 
 #################################################################
 #######		         FONCTIONS			#########
 #################################################################
 
 ft_usage(){
-	echo "Usage: `basename $0` [-b backup] [ [-s <source file>]]"
+	echo "Usage: `basename $0` [[-b backup]  [-a app] [-d database] [-c config] [-D data]]  [[-s <source file>]]"
   	exit $E_ERREUROPTION
 }
 
@@ -253,7 +246,7 @@ ft_sourcefile(){
 
 
 #################################################################
-#######		         MAIN								#########
+#######		         MAIN				#########
 #################################################################
 
 
