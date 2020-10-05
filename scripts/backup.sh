@@ -41,7 +41,6 @@ ft_backup(){
 		exit $E_ERREURNC
 	fi
 
-
 	## Dump de la base de donnée SQL
 	sudo $NEXTCLOUD_SQLDUMP >/tmp/$FILE_SQLDUMP
 
@@ -50,15 +49,12 @@ ft_backup(){
 		exit $E_ERREURNC
 	fi
 
-
 	## Creation du lien symbolique pour le backup
 	ln -s /tmp/$FILE_SQLDUMP "$SRC_PATH"
-
 
 	## Log
 	echo -e "\t\t[BACKUP]\t$DATE-$DAY\t$HOUR\n" >>$LOG_PATH/backup_$DATE.log
 	echo -e "\t--- Removing old backups\n" >>$LOG_PATH/backup_$DATE.log
-
 
 	## Suppression des plus vieux backup
 	duplicity \
@@ -77,7 +73,6 @@ ft_backup(){
 	#Log
 	echo -e "\t--- Creating and uploading backup\n" >>$LOG_PATH/backup_$DATE.log
 
-
 	## Sauvegarde
 	duplicity \
 		--full-if-older-than "$FULL_BACKUP_TIME" \
@@ -95,10 +90,8 @@ ft_backup(){
 		>&2 echo "[BACKUP ERROR]  La sauvegarde a échouée."
 	fi
 
-
 	#Suppression du lien symbolique du dump de la base de donnée
 	rm "$SRC_PATH/$FILE_SQLDUMP"
-
 
 	## Desactive le mode maintenance
 	sudo $NEXTCLOUD_OCC maintenance:mode --off
@@ -111,6 +104,7 @@ ft_backup(){
 	exit 0
 }
 
+
 ## Liste le bucket
 ft_list_bucket(){
 	duplicity \
@@ -119,6 +113,7 @@ ft_list_bucket(){
 		--sign-key "$SIG_KEY" \
 		"$SCW_BUCKET"
 }
+
 
 ## Liste une sauvegarde
 ft_list_files(){
@@ -188,7 +183,6 @@ ft_recover(){
 	Restorer un fichier precis (4)
 	Quitter (5)"
 
-
 	echo -en  "$CONSIGNE2\n(1-5): "
 	read OPT
 
@@ -227,6 +221,7 @@ ft_recover(){
 			"$SCW_BUCKET" "$DST"
 	fi
 }
+
 
 ## Source les fichiers passés en parametres avec l'option -s
 ft_sourcefile(){
