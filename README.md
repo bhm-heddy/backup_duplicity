@@ -1,67 +1,101 @@
 # backup_duplicity
 
+
+**backup.sh** : Effectue la sauvegarde.
+
+**backup_list_bucket.sh** : Liste l'ensemble des sauvegardes sur le bucket.
+
+**backup_list_files.sh** : Liste les fichiers et répertoires dans une sauvegarde.
+
+**backup_recover.sh**: Récupère une sauvegarde complète ou un fichier ou répertoire précis.
+
+
 # INSTALLATION
 
-#### Installer duplicit`
+#### Installer duplicity
+ubutun 16.04 LTS
+`sudo snap install duplicity --classic`
+	
+Ubuntu 20.04.1 LTS
 `sudo apt-get update && sudo apt-get install duplicity -y`
 
 #### Installer les dépendances necessaire pour le protocol s3
+
+ubutun 16.04 LTS
+`sudo apt-get install -y python-boto`
+
+Ubuntu 20.04.1 LTS
 `sudo apt-get install -y python3-boto`
 
 #### Créer la clé de chiffrement
-`gpg --full-generate-key`
+  `sudo gpg --full-generate-key`
 
 #### Créer la clé de signature
-`gpg --full-generate-key`
+  `sudo gpg --full-generate-key`
 
-#### Faire un backup des clés.
-
-
-# CONFIGURATION
-
-## CFG.SH
-
-Vérifier que la valeur de "BACKUP_PATH" conresponde au path du répertoir contenant "backup", "log", "scripts" 
-
-La variable "FULL_BACKUP_TIME" indique à duplicity d'effectuer un backup complet tous les X temps.
-
-La variable "REMOVE_BACK_TIME" indique à duplicity d'effacer les backup après X temps. 
-
-Par defaut, ces variables sont configurées pour effectuer un backup complet tous les mois et effacer les backup après 6 mois. 
-
-*****
-s, m, h, D, W, M, or Y (indique secondes, minutes, heures, jours, semaine, mois, or années respectivement).
-Exemple "1h78m" correspond à  une heure et 78 minutes.
-Un mois est toujours égal a 35jours et une année à 365 jours.
-*****
+#### Faire un sauvegarde des clés.
 
 
-## AUTH.SH
 
-Renseigner les variables présentes dans le script avec :
-- Le fingerprint de la clé de chiffrement
-- Le fingerprint de la clé de signature
-- Le mot de passe de la clé de chiffrement
-- Le mot de passe de la cle de signature
-- L'ID du bucket cloud storage
-- Le mot de passe du bucket
-- Le nom du bucket
+# UTILISATION
+
+## Fonctionnement
+
+Les scipts *scripts/backup.sh*, *scipts/backup_list_bucket.sh*, *scripts/backup_list_files.sh*, *scripts/backup_recover.sh* ont besoin que des *variables d'environnements* et des *variables locales* soient initialisées.
+
+Varaibles d'envirronnement pour le chiffrement gpg
+* ENC_KEY : Le fingerprint de la clé de chiffrement
+* SIG_KEY : Le fingerprint de la clé de signature
+* PASSPHRASE : Le mot de passe de la clé de chiffrement
+* SIGN_PASSPHRASE : Le mot de passe de la cle de signature
+
+Variables d'environnement pour le bucket S3
+* AWS_ACCESS_KEY_ID : L'ID du bucket cloud storage
+* AWS_SECRET_ACCESS_KEY : Le mot de passe du bucket
+* SCW_BUCKET : Le nom du bucket
+
+Variables locales de configuration de la sauvegarde.
+Si ces variables n'existent pas, elles prennent une valeur défaut
+* FULL_BACKUP_TIME : Effectue un sauvegarde complet tous les X temps. (défaut: *1M*)
+* REMOVE_BACK_TIME : Efface les sauvegardes les plus anciens après X temps. (défaut: *6M*)
+* SRC_PATH : Chemin du répertoir à sauvegarder. (defaut: *A COMPLETER*)
+* LOG_PATH : Chemin oú écrire les log (défaut: */var/log*)
 
 
 
 
-# MISE EN PLACE
+## Conseil de mise en place et d'utilisation
 
-Mettre les répertoires et fichier à backup dans le répertoire "backup". 
-Pour éviter de devoir copier des répertoires entiers des liens symboliques peuvent mis en place :
+Créer un répertoire pour stocker les fichiers à backup
+`mkdir ~/backup`
+Pour ne pas à avoir à copier des fichiers et répertoires volumineux, l'utilisation de liens symboliques est supporté
+`ln -s /rèpertoire_à_sauvegardè ~/backup/ŕepertoire`
 
-exemple : ln -s /var/snap/nextcloud/common/nextcloud/data ~/duplicity/backup/nextcloud_data
+Rendre les scripts exècutables 
+
+`chmod +x scripts/*.sh `
+
+Déplacer les scripts dans */usr/sbin*
+
+`mv scripts/*.sh /usr/sbin`
+
+Renseigner les variables des fichiers de configuration et les déplacer dans */etc*
+
+`mv backup_auth.conf backup_cfg.conf /etc`
+
+#### Utilisation
+`backup.sh /etc/backup_auth.conf /etc/backup_cfg.conf`
+
+`backup_list_bucket.sh /etc/backup_auth.conf`
+
+`backup_recover.sh /etc/backup_auth.conf`
+
+#### Crontab
+Mise en place d'une tâche crontab effectuant une sauvegarde tous les jours à 03h00.
+
+`crontab -e`
+
+`00 03 * * *		backup.sh /etc/backup_auth.conf /etc/backup_cfg.conf`
 
 
 
-
-
-## PARTIE SCRIPT
-
-
-##### Renseigner les champs du script auth.sh && cfg.sh
