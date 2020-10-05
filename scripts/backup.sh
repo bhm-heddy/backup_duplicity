@@ -24,12 +24,6 @@ FILE_SQLDUMP=nextcloudsql_backup_$DATE-$DAY.bak
 TIME_FORMAT='\n[TIME FORMAT]\nPlusieurs formats sont acceptés :\n- Un interval : s, m, h, D, W, M, or Y (indique secondes, minutes, heures, jours, semaine, mois, or années respectivement). Exemple "1h78m" correspond à une heure et 78 minutes. Un mois est toujours égal a 35jours et une année à 365 jours.\n- Une date précise  "2002-04-26T04:22:01" ou "2/4/1997" ou "2001-04-23"\nDe nombreuses combinaisons sont acceptables. Man duplicity, section "Time format" pour plus d information.\n\n'
 
 
-# Quitte si aucun argument
-#if [ $# -eq 0 ]
-#then
-#  echo "Erreur: au moins un argument attendu"
-#  ft_usage
-#fi
 
 
 #################################################################
@@ -43,8 +37,6 @@ ft_usage(){
 
 
 ft_backup(){
-
-
 
 ## Active le mode maintenance de nextcloud
 sudo $NEXTCLOUD_OCC maintenance:mode --on
@@ -68,7 +60,7 @@ fi
 ln -s /tmp/$FILE_SQLDUMP "$SRC_PATH"
 
 
-
+## Log
 echo -e "\t\t[BACKUP]\t$DATE-$DAY\t$HOUR\n" >>$LOG_PATH/backup_$DATE.log
 echo -e "\t--- Removing old backups\n" >>$LOG_PATH/backup_$DATE.log
 
@@ -87,7 +79,7 @@ if [ $? -ne 0 ]; then
 	>&2 echo "[BACKUP ERROR]  La suppression des anciens backup a échouée."
 fi
 
-
+#Log
 echo -e "\t--- Creating and uploading backup\n" >>$LOG_PATH/backup_$DATE.log
 
 
@@ -124,7 +116,7 @@ fi
 exit 0
 }
 
-
+## Liste le bucket
 ft_list_bucket(){
 duplicity \
 	collection-status \
@@ -133,7 +125,7 @@ duplicity \
 	"$SCW_BUCKET"
 }
 
-
+## Liste une sauvegarde
 ft_list_files(){
 CONSIGNE1="Entrer :\n- Une date specifique\n- Vide ou 0 pour le backup le plus récent\n- 1 pour afficher les details des backup\n   ->: "
 
@@ -164,7 +156,7 @@ duplicity \
 }
 
 
-
+## Propose de lister le bucket ou une sauvegarde
 ft_list(){
 	echo -ne "Afficher le détail du bucket (1) \nAfficher le detail d'un backup (2)\n(1/2) : "
 	read CHOICE
@@ -194,6 +186,7 @@ ft_gleaning(){
 }
 
 
+## Mode recover 
 ft_recover(){
 
 CONSIGNE2="
@@ -243,7 +236,7 @@ elif [ "$OPT" = "4" ]; then
 fi
 }
 
-
+## Source les fichiers passés en parametres avec l'option -s
 ft_sourcefile(){
 	if [ -r "$OPTARG" ]; then
 		source "$OPTARG"
@@ -259,7 +252,7 @@ ft_sourcefile(){
 
 
 #################################################################
-#######		         MAIN								#########
+#######		         MAIN				#########
 #################################################################
 
 
