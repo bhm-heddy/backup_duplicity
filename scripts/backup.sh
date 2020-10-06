@@ -16,7 +16,9 @@ ARGS=0
 #Path nextcloud, defaut nextcloud installé par snap
 NEXTCLOUD_OCC=${NEXTCLOUD_OCC:-/snap/bin/nextcloud.occ}
 NEXTCLOUD_SQLDUMP=${NEXTCLOUD_SQLDUMP:-/snap/bin/nextcloud.mysqldump}
-FILE_SQLDUMP=nextcloudsql_backup_$DATE-$DAY.bak
+
+FILE_SQLDUMP=nextcloudsql_backup.bak
+DUPLICITY_PATH=${$DUPLICITY_PATH:-/snap/bin/duplicity}
 
 TIME_FORMAT='\n[TIME FORMAT]\nPlusieurs formats sont acceptés :\n- Un interval : s, m, h, D, W, M, or Y (indique secondes, minutes, heures, jours, semaine, mois, or années respectivement). Exemple "1h78m" correspond à une heure et 78 minutes. Un mois est toujours égal a 35jours et une année à 365 jours.\n- Une date précise  "2002-04-26T04:22:01" ou "2/4/1997" ou "2001-04-23"\nDe nombreuses combinaisons sont acceptables. Man duplicity, section "Time format" pour plus d information.\n\n'
 
@@ -57,7 +59,7 @@ ft_backup(){
 	echo -e "\t--- Removing old backups\n" >>$LOG_PATH/backup_$DATE.log
 
 	## Suppression des plus vieux backup
-	duplicity \
+	"$DUPLICITY_PATH" \
 		remove-older-than "$REMOVE_BACKUP_TIME" \
 		--verbosity 8 \
 		--sign-key "$SIG_KEY" \
@@ -74,7 +76,7 @@ ft_backup(){
 	echo -e "\t--- Creating and uploading backup\n" >>$LOG_PATH/backup_$DATE.log
 
 	## Sauvegarde
-	duplicity \
+	"$DUPLICITY_PATH" \
 		--full-if-older-than "$FULL_BACKUP_TIME" \
 		--copy-links \
 		--verbosity 8 \
@@ -107,7 +109,7 @@ ft_backup(){
 
 ## Liste le bucket
 ft_list_bucket(){
-	duplicity \
+	"$DUPLICITY_PATH" \
 		collection-status \
 		--encrypt-key "$ENC_KEY" \
 		--sign-key "$SIG_KEY" \
@@ -136,7 +138,7 @@ ft_list_files(){
 		TIME=0
 	fi
 
-	duplicity \
+	"$DUPLICITY_PATH" \
 		list-current-files -t $TIME \
 		--encrypt-key "$ENC_KEY" \
 		--sign-key "$SIG_KEY" \
@@ -205,7 +207,7 @@ ft_recover(){
 
 	if [ "$OPT" = "3" ]; then
 		ft_gleaning
-		duplicity \
+		"$DUPLICITY_PATH" \
 			-t "$TIME" \
 			--encrypt-key "$ENC_KEY" \
 			--sign-key "$SIG_KEY" \
@@ -213,7 +215,7 @@ ft_recover(){
 
 	elif [ "$OPT" = "4" ]; then
 		ft_gleaning
-		duplicity \
+		"$DUPLICITY_PATH" \
 			-t $TIME \
 			--file-to-restore "$FILE" \
 			--encrypt-key "$ENC_KEY" \
