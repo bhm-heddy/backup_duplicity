@@ -268,7 +268,7 @@ DUPLICITY_PATH=${$DUPLICITY_PATH:-$(which duplicity)}
 if [ -z "$ENC_KEY" ] || [ -z "$SIG_KEY" ] \
 	|| [ -z "$PASSPHRASE" ] || [ -z "$SIGN_PASSPHRASE" ] \
 	|| [ -z "$AWS_ACCESS_KEY_ID" ] || [ -z "$AWS_SECRET_ACCESS_KEY" ] \
-	|| [ -z "$SCW_BUCKET" ]
+	|| [ -z "$SCW_BUCKET" ] || [ -z "$DUPLICITY_PATH" ]
 then
 	>&2 echo "Une ou des variables n'ont pas été initialisées. Voir README.ME"
 	exit $E_ERREURENV
