@@ -1,4 +1,4 @@
-# backup_duplicity
+# backup_nextdup
 
 
 **backup.sh** : Effectue une sauvegarde sur un bucket s3, afficher les sauvegardes et leurs contenus
