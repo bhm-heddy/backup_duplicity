@@ -261,8 +261,7 @@ SRC_PATH=${SRC_PATH:-~/backup}
 LOG_PATH=${LOG_PATH:-/var/log}
 REMOVE_BACKUP_TIME=${REMOVE_BACKUP_TIME:-6M}
 FULL_BACKUP_TIME=${FULL_BACKUP_TIME:-1M}
-DUPLICITY_PATH=${$DUPLICITY_PATH:-$(which duplicity)}
-
+DUPLICITY_PATH=${DUPLICITY_PATH:-$(which duplicity)}
 
 # Vérifie l'existence de ces variables
 if [ -z "$ENC_KEY" ] || [ -z "$SIG_KEY" ] \
